@@ -7,18 +7,10 @@ Original file is located at
     https://colab.research.google.com/drive/18Cmc4q6Zuyiuqvh-tQBU5FZBWLGfJWb4
 """
 
-# Commented out IPython magic to ensure Python compatibility.
-# Import libraries. You may or may not use all of these.
 !pip install -q git+https://github.com/tensorflow/docs
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-
-try:
-  # %tensorflow_version only exists in Colab.
-#   %tensorflow_version 2.x
-except Exception:
-  pass
 import tensorflow as tf
 
 from tensorflow import keras
@@ -36,7 +28,7 @@ import tensorflow_docs.plots
 import tensorflow_docs.modeling
 from sklearn.model_selection import train_test_split
 
-# Import data
+# get dataset
 !wget https://cdn.freecodecamp.org/project-data/health-costs/insurance.csv
 dataset = pd.read_csv('insurance.csv')
 dataset.head()
@@ -64,28 +56,23 @@ tf.convert_to_tensor(test_labels)
 
 model = Sequential() 
 init = tf.keras.initializers.RandomUniform(minval=-0.05, maxval=0.05, seed=1)
-model.add(Dense(32, activation = 'linear', kernel_initializer = init, input_shape = (6, )))
-# model.add(Dropout(0.2, input_shape = (16, ))) 
+model.add(Dense(32, activation = 'linear', kernel_initializer = init, input_shape = (
 model.add(BatchNormalization())
 model.add(Dense(16, activation = 'relu', kernel_initializer = init))
-# model.add(BatchNormalization())
-# model.add(Dropout(0.5))
 model.add(Dense(1, activation = 'linear'))
 model.compile(optimizer = 'adam', loss = 'mse', metrics = 'mae')
 es = EarlyStopping(monitor = 'mae', min_delta = 0, patience = 50, verbose = 0, mode = 'auto', baseline = None, restore_best_weights = True)
 model.fit(train_dataset, train_labels, batch_size = 32, epochs = 400, validation_data = (test_dataset, test_labels), verbose = 1, callbacks = [es])
-# model.summary()
+
 model.save('health cost.h5')
 
 error = model.evaluate(test_dataset, test_labels, verbose = 1)
 
 model = load_model('health cost.h5')
+    
 model.add(Dense(32, activation = 'linear', kernel_initializer = 'RandomNormal', input_shape = (6, )))
-# model.add(Dropout(0.2, input_shape = (16, ))) 
 model.add(BatchNormalization())
 model.add(Dense(16, activation = 'relu', kernel_initializer = 'RandomNormal'))
-# model.add(BatchNormalization())
-# model.add(Dropout(0.5))
 model.add(Dense(1, activation = 'linear'))
 model.compile(optimizer = 'adam', loss = 'mse', metrics = 'mae')
 es = EarlyStopping(monitor = 'mae', min_delta = 0, patience = 50, verbose = 0, mode = 'auto', baseline = None, restore_best_weights = True)
@@ -94,26 +81,3 @@ model.fit(train_dataset, train_labels, batch_size = 32, epochs = 400, validation
 error = model.evaluate(test_dataset, test_labels, verbose = 1)
 
 model.predict(test_dataset)
-
-# RUN THIS CELL TO TEST YOUR MODEL. DO NOT MODIFY CONTENTS.
-# Test model by checking how well the model generalizes using the test set.
-loss, mae = model.evaluate(test_dataset, test_labels, verbose=2)
-
-print("Testing set Mean Abs Error: {:5.2f} expenses".format(mae))
-
-if mae < 3500:
-  print("You passed the challenge. Great job!")
-else:
-  print("The Mean Abs Error must be less than 3500. Keep trying.")
-
-# Plot predictions.
-test_predictions = model.predict(test_dataset).flatten()
-
-a = plt.axes(aspect='equal')
-plt.scatter(test_labels, test_predictions)
-plt.xlabel('True values (expenses)')
-plt.ylabel('Predictions (expenses)')
-lims = [0, 50000]
-plt.xlim(lims)
-plt.ylim(lims)
-_ = plt.plot(lims,lims)
