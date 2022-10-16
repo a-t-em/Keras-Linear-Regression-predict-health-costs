@@ -1,2 +1,3 @@
-# Linear-Regression-predict-health-cost
-Predict health costs with Tensorflow Keras Neural Network model 
+A Tensorflow Keras Sequential model to perform Linear Regression. 
+Predicts health costs based on mutliple features, e.g. 'age', 'sex', 'bmi' 
+Model performance is evaluated with MAE.  
