@@ -1,3 +1,3 @@
 A Tensorflow Keras Sequential model to perform Linear Regression. 
-Predicts health costs based on mutliple features, e.g. 'age', 'sex', 'bmi' 
+Predicts health costs based on mutliple features, e.g. 'age', 'sex', 'bmi'.
 Model performance is evaluated with MAE.  
