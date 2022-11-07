@@ -7,8 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/18Cmc4q6Zuyiuqvh-tQBU5FZBWLGfJWb4
 """
 
-!pip install -q git+https://github.com/tensorflow/docs
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import tensorflow as tf
@@ -16,13 +14,8 @@ from tensorflow import keras
 from keras import layers
 from keras.models import Sequential
 from keras.layers import Dense
-from keras.layers import Dropout
 from keras.callbacks import EarlyStopping
 from keras.layers import BatchNormalization
-from keras.models import load_model
-import tensorflow_docs as tfdocs
-import tensorflow_docs.plots
-import tensorflow_docs.modeling
 from sklearn.model_selection import train_test_split
 from os import X_OK
 
