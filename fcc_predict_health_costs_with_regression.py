@@ -27,8 +27,8 @@ dataset.head()
 one_hot = LabelBinarizer()
 dataset['region'] = one_hot.fit_transform(dataset.region.values)
 
-dataset['sex'].replace({'male': 1, 'female': 0})
-dataset['smoker'].replace({'yes': 1, 'no': 0})
+dataset['sex'] = dataset.sex.replace({'male': 1, 'female':0})
+dataset['smoker'] = dataset.smoker.replace({'yes':1, 'no': 0})
 
 X = dataset.iloc[ : , 0:6].values
 y = dataset.expenses.values
