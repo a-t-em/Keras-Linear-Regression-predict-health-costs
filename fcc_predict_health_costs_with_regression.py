@@ -9,20 +9,17 @@ Original file is located at
 
 import numpy as np
 import pandas as pd
-
 import tensorflow as tf
-
 from tensorflow import keras
 from keras import layers
 from keras.models import Sequential
 from keras.layers import Dense
-from keras.callbacks import EarlyStopping
 from keras.layers import BatchNormalization
-
+from keras.callbacks import EarlyStopping
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelBinarizer
 
-# Import data
+# get data
 !wget https://cdn.freecodecamp.org/project-data/health-costs/insurance.csv
 dataset = pd.read_csv('insurance.csv')
 dataset.head()
