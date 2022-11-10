@@ -7,21 +7,17 @@ Original file is located at
     https://colab.research.google.com/drive/18Cmc4q6Zuyiuqvh-tQBU5FZBWLGfJWb4
 """
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
 import tensorflow as tf
 
 from tensorflow import keras
-from tensorflow import feature_column 
 from keras import layers
 from keras.models import Sequential
 from keras.layers import Dense
-from keras.layers import Dropout
 from keras.callbacks import EarlyStopping
 from keras.layers import BatchNormalization
-from keras.models import load_model
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelBinarizer
@@ -42,8 +38,6 @@ y = dataset.expenses.values
 y = y.astype('float32')
 X = X.astype('float32')
 train_dataset, test_dataset, train_labels, test_labels = train_test_split(X, y, test_size = 0.2)
-
-dataset.head()
 
 tf.convert_to_tensor(train_dataset)
 tf.convert_to_tensor(test_dataset)
@@ -66,29 +60,4 @@ model.fit(train_dataset, train_labels, batch_size = 32, epochs = 400, validation
 
 error = model.evaluate(test_dataset, test_labels, verbose = 1)
 
-error = model.evaluate(test_dataset, test_labels, verbose = 1)
-
 model.predict(test_dataset)
-
-# RUN THIS CELL TO TEST YOUR MODEL. DO NOT MODIFY CONTENTS.
-# Test model by checking how well the model generalizes using the test set.
-loss, mae = model.evaluate(test_dataset, test_labels, verbose=2)
-
-print("Testing set Mean Abs Error: {:5.2f} expenses".format(mae))
-
-if mae < 3500:
-  print("You passed the challenge. Great job!")
-else:
-  print("The Mean Abs Error must be less than 3500. Keep trying.")
-
-# Plot predictions.
-test_predictions = model.predict(test_dataset).flatten()
-
-a = plt.axes(aspect='equal')
-plt.scatter(test_labels, test_predictions)
-plt.xlabel('True values (expenses)')
-plt.ylabel('Predictions (expenses)')
-lims = [0, 50000]
-plt.xlim(lims)
-plt.ylim(lims)
-_ = plt.plot(lims,lims)
